@@ -24,4 +24,6 @@ gtkwave logs/reciprocal_test.fst
 
 
 ## Reference
-https://observablehq.com/@drom/reciprocal-approximation
+https://observablehq.com/@drom/reciprocal-approximation  
+  
+signalflip-js (simulation): https://github.com/ameetgohil/signalflip-js  
