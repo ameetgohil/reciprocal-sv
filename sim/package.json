@@ -1,0 +1,33 @@
+{
+   "name": "test",
+   "version": "0.1.0",
+   "main": "index.js",
+   "dependencies": {
+      "cmake-js": "^5.1.0",
+      "jsverify": "^0.8.4",
+      "lodash": "latest",
+      "mocha": "^5.2.0",
+      "node-addon-api": "latest",
+      "signalflip-js": "latest"
+   },
+   "cmake-js": {
+      "runtime": "node"
+   },
+   "scripts": {
+      "create-tb": "node src/create-tb.js",
+      "compile": "make verilate && cd obj_dir && make -f ../Makefile_obj createlib",
+      "rebuild": "cmake-js rebuild",
+      "build": "cmake-js compile",
+      "clean": "cmake-js clean",
+      "all": "npm run compile && npm run build && npm run mocha",
+      "test": "node index.js",
+      "mocha": "mocha",
+      "gen": "node gensigs.js"
+   },
+   "gypfile": true,
+   "devDependencies": {
+      "node-gyp": "^3.8.0"
+   },
+   "author": "Ameet Gohil",
+   "license": "MIT"
+}

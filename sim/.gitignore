@@ -1,0 +1,8 @@
+build
+node_modules
+logs
+obj_dir
+*~
+#*
+.#*
+*#
