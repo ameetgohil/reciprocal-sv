@@ -10,8 +10,6 @@ Currently implements Q6.10 reciprocal with saturation logic
 - cmake
 - gtkwave (optional)
 
-Set the RISCV variable in the environment to the location of riscv gcc tools
-
 ### Run instructions
 ```bash
 cd sim
