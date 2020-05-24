@@ -1,0 +1,3 @@
+[submodule "leading-zeroes-counter"]
+	path = leading-zeroes-counter
+	url = https://github.com/ameetgohil/leading-zeroes-counter
