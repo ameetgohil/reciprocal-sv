@@ -16,20 +16,20 @@ describe('Basic Group', () => {
     dut.init(name); // Init dut
     sim = new Sim(dut);
     
-    // TODO: Create clock
-    // let clk = new Clock(dut.clk, 1);
+      // TODO: Create clock
+      //let clk = new Clock(dut.clk, 1);
     // sim.addClock(clk);
     
     // TODO: Add setup code (interfaces, transaction, ...) etc...
 
     // TODO: Add reset task
-    // sim.addTask(function* () {
-    //   dut.rstf(0);
-    //   yield* RisingEdges(dut.clk, 10); // assert reset low for 10 clock cycles
-    //   dut.rstf(1);
-    //   yield* RisingEdge(dut.clk);
-    // }(), 'RESET');
-
+    /*sim.addTask(function* () {
+       dut.reset_n(0);
+       yield* RisingEdges(dut.clk, 10); // assert reset low for 10 clock cycles
+       dut.reset_n(1);
+       yield* RisingEdge(dut.clk);
+     }(), 'RESET');
+     */
     // TODO: Add post_run tasks (test checking)
     // sim.addTask(() => { /* post_run function */}, 'POST_RUN'});
 
@@ -38,10 +38,14 @@ describe('Basic Group', () => {
     this.timeout(10000); // Set timeout to expected run time of the test in ms
       setup('reciprocal_test');
       sim.addTask(function *() {
-          for(let i of _.range(0xf)) {
-              console.log((f2f.toFixed(1.0/f2f.toFloat(i,6,10))).toString(16));
+          for(let i of _.range(0xffff)) {
+              //console.log((f2f.toFixed(1.0/f2f.toFloat(i,6,10))).toString(16));
               dut.i_data(i);
+              //dut.t_0_dat(i);
+              //dut.t_0_req(1);
+              //dut.i_16_ack(1);
               yield* Tick();
+              //yield* RisingEdge(dut.clk);
           }
       }());
       sim.run(100000);
