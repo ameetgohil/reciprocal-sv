@@ -4,6 +4,8 @@ module reciprocal
    );
 
    //QM.N M= 6, N= 10
+   localparam bit[4:0] M = 6;
+   localparam [9:0] N= 10;
    
    /*
     Reciprocal Algorithm
@@ -15,17 +17,23 @@ module reciprocal
     output = e * 4;
     */
 
-   lzc lzc_inst(.i_data(i_data), .lzc_cnt(lzc_cnt));
+   reg [4:0]         lzc_cnt, rescale_lzc;
+   reg [15:0]        a, b, d, f, reci, rescale_data, sat_data, scale_data;
+   /* verilator lint_off UNUSED */
+   reg [31:0]        c,e;
+   /* verilator lint_on UNUSED */
+   
+   lzc#(.WIDTH(16)) lzc_inst(.i_data(i_data), .lzc_cnt(lzc_cnt));
 
    assign rescale_lzc = M - lzc_cnt;
  
    //scale input data to be b/w .5 and 1 for accuraate reciprocal result
    assign scale_data = M >= lzc_cnt ? i_data >> (M-lzc_cnt): i_data << (lzc_cnt - M);
 
-   assign a = i_data;
+   assign a = scale_data;
 
    //1.466 in Q6.10 is 16'h5dd - See fixed2float project on github for conversion
-   assign b = 16'h5dd - i_daata;
+   assign b = 16'h5dd - a;
 
    assign c = $signed(a) * $signed(b);
 
