@@ -1,7 +1,7 @@
 {
-    "dut_file": "",  
-    "dut_name": "",
-    "waveform_format": "vcd",
+    "dut_file": "../rtl/reciprocal.sv",  
+    "dut_name": "reciprocal",
+    "waveform_format": "fst",
 
     "probe": [ "sig1", "sig2", "sig3"]
 
