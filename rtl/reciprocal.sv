@@ -18,11 +18,11 @@ module reciprocal
     */
 
    reg [4:0]         lzc_cnt, rescale_lzc;
-   reg [15:0]        a, b, d, f, reci, rescale_data, sat_data, scale_data;
+   reg [15:0]        a, b, d, f, reci, sat_data, scale_data;
+   reg [31:0]        rescale_data;
+   
    /* verilator lint_off UNUSED */
    reg [31:0]        c,e;
-   reg [15:0]        temp;
-   
    /* verilator lint_on UNUSED */
    
    lzc#(.WIDTH(16)) lzc_inst(.i_data(i_data), .lzc_cnt(lzc_cnt));
@@ -30,7 +30,7 @@ module reciprocal
    assign rescale_lzc = $signed(M) - $signed(lzc_cnt);
  
    //scale input data to be b/w .5 and 1 for accuraate reciprocal result
-   assign scale_data = M >= lzc_cnt ? i_data >> (M-lzc_cnt): i_data << (lzc_cnt - M);
+   assign scale_data = M >= lzc_cnt ? i_data >>> (M-lzc_cnt): i_data <<< (lzc_cnt - M);
 
    assign a = scale_data;
 
@@ -41,9 +41,8 @@ module reciprocal
 
    //1.0012 in Q6.10 is 16'h401 - See fixed2float project on github for conversion
    assign d = 16'h401 - $signed(c[25:10]);
-   assign temp = c[25:10];
    
-   assign e = $signed(b) * $signed(d);
+   assign e = $signed(d) * $signed(b);
 
    assign f = e[25:10];
 
@@ -51,10 +50,10 @@ module reciprocal
 
    //rescale reci to by the lzc factor
 
-   assign rescale_data = rescale_lzc[4] ? reci << (~rescale_lzc + 1'b1) : reci >> rescale_lzc;
+   assign rescale_data = rescale_lzc[4] ? {16'b0,reci} << (~rescale_lzc + 1'b1) : {16'b0,reci} >> rescale_lzc;
 
    //Saturation logic
-   assign sat_data = rescale_data[15] ? 16'h7FFF : rescale_data;
+   assign sat_data = |rescale_data[31:15] ? 16'h7FFF : rescale_data[15:0];
 
    assign o_data = sat_data;
 
