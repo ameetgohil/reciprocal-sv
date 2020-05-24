@@ -36,7 +36,7 @@ module reciprocal
    assign rescale_lzc = $signed(M) - $signed(lzc_cnt);
 
    //scale input data to be b/w .5 and 1 for accuraate reciprocal result
-   assign scale_data = M >= lzc_cnt ? i_data >>> (M-lzc_cnt): i_data <<< (lzc_cnt - M);
+   assign scale_data = M >= lzc_cnt ? unsigned_data >>> (M-lzc_cnt): unsigned_data <<< (lzc_cnt - M);
 
    assign a = scale_data;
 
