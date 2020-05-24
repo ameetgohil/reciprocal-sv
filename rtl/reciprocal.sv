@@ -20,15 +20,21 @@ module reciprocal
    reg [4:0]         lzc_cnt, rescale_lzc;
    reg [15:0]        a, b, d, f, reci, sat_data, scale_data;
    reg [31:0]        rescale_data;
-   
+   reg               sign;
+   reg [15:0]               unsigned_data;
+
    /* verilator lint_off UNUSED */
    reg [31:0]        c,e;
    /* verilator lint_on UNUSED */
-   
-   lzc#(.WIDTH(16)) lzc_inst(.i_data(i_data), .lzc_cnt(lzc_cnt));
+
+   assign sign = i_data[15];
+
+   assign unsigned_data = sign ? (~i_data + 1'b1) : i_data;
+
+   lzc#(.WIDTH(16)) lzc_inst(.i_data(unsigned_data), .lzc_cnt(lzc_cnt));
 
    assign rescale_lzc = $signed(M) - $signed(lzc_cnt);
- 
+
    //scale input data to be b/w .5 and 1 for accuraate reciprocal result
    assign scale_data = M >= lzc_cnt ? i_data >>> (M-lzc_cnt): i_data <<< (lzc_cnt - M);
 
@@ -55,6 +61,6 @@ module reciprocal
    //Saturation logic
    assign sat_data = |rescale_data[31:15] ? 16'h7FFF : rescale_data[15:0];
 
-   assign o_data = sat_data;
+   assign o_data = sign ? (~sat_data + 1'b1) : sat_data;
 
 endmodule
