@@ -1,6 +1,6 @@
 const dut = require('../build/Release/dut.node');
 const {Sim, SimUtils, RisingEdge, RisingEdges, FallingEdge, FallingEdges, Edge, Edges, Interfaces} = require('signalflip-js');
-const { Clock } = SimUtils;
+const { Clock, Tick } = SimUtils;
 const {Elastic} = Interfaces;
 const _ = require('lodash');
 
@@ -33,17 +33,16 @@ describe('Basic Group', () => {
     // sim.addTask(() => { /* post_run function */}, 'POST_RUN'});
 
   };
-  it('test1', function () {
+  it('reciprocal_test', function () {
     this.timeout(10000); // Set timeout to expected run time of the test in ms
-    let t = jsc.forall(jsc.constant(0), function {
-      setup('top');
-      // TODO: customize txn, randomizer, set variables/signals
-      
-      sim.run(1000); //run for 1000 ticks
-      return true;
-    });
-    const props = {size: 2000, tests: 200}; //, rngState: "" }; // <- add this parameter to run the test with the seed that caused the error
-    jsc.check(t, props);
+      setup('reciprocal_test');
+      sim.addTask(function *() {
+          for(let i of _.range(0xfff)) {
+              dut.i_data(i);
+              yield* Tick();
+          }
+      }());
+      sim.run(100000);
   });
 });
 
