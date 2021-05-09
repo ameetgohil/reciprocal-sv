@@ -15,10 +15,13 @@ describe('Basic Group', () => {
     // set up the environment
     dut.init(name); // Init dut
     sim = new Sim(dut);
-    
-      // TODO: Create clock
-      //let clk = new Clock(dut.clk, 1);
-    // sim.addClock(clk);
+
+      let dummyClk = (val) => {
+	  return val;
+      };
+      // Dummy clock
+      let clk = new Clock(dummyClk, 1);
+      sim.addClock(clk);
     
     // TODO: Add setup code (interfaces, transaction, ...) etc...
 
