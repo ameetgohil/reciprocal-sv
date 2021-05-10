@@ -4,12 +4,12 @@
    "main": "index.js",
    "dependencies": {
       "cmake-js": "^5.1.0",
+      "fixed2float": "latest",
       "jsverify": "^0.8.4",
       "lodash": "latest",
-      "mocha": "^5.2.0",
+      "mocha": "^8.4.0",
       "node-addon-api": "latest",
-      "signalflip-js": "latest",
-      "fixed2float": "latest"
+      "signalflip-js": "latest"
    },
    "cmake-js": {
       "runtime": "node"
