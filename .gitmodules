@@ -4,3 +4,5 @@
 [submodule "lzc"]
 	path = lzc
 	url = git@github.com:ameetgohil/leading-zeroes-counter.git
+[submodule "lzc/"]
+	url = https://github.com/ameetgohil/leading-zeroes-counter.git
