@@ -4,10 +4,9 @@
    "main": "index.js",
    "dependencies": {
       "cmake-js": "^5.1.0",
-      "fixed2float": "latest",
       "jsverify": "^0.8.4",
       "lodash": "latest",
-      "mocha": "^8.4.0",
+      "mocha": "^9.0.3",
       "node-addon-api": "latest",
       "signalflip-js": "latest"
    },
@@ -24,10 +23,6 @@
       "test": "node index.js",
       "mocha": "mocha",
       "gen": "node gensigs.js"
-   },
-   "gypfile": true,
-   "devDependencies": {
-      "node-gyp": "^3.8.0"
    },
    "author": "Ameet Gohil",
    "license": "MIT"
