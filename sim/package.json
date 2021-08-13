@@ -2,7 +2,8 @@
    "name": "test",
    "version": "0.1.0",
    "main": "index.js",
-   "dependencies": {
+    "dependencies": {
+      "fixed2float": "latest",
       "cmake-js": "^5.1.0",
       "jsverify": "^0.8.4",
       "lodash": "latest",
